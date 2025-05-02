@@ -191,23 +191,27 @@ INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, 
 VALUES (2, 'Jane', 'Smith', 'jane.smith@email.com', '850505/5678', 2000.00, 'CZ2308000000001234567890', 'Brno', 'Side St', 12, 'employee', '+420777654321');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (3, 'Alice', 'Johnson', 'alice.j@email.com', '901010/9012', 3000.00, 'CZ3408000000001234567890', 'Ostrava', 'Park Ave', 20, 'employee', '+420777112233');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (4, 'Peter', 'Novak', 'peter.novak@email.com', '820202/4321', 2200.00, 'CZ5608000000001234567890', 'Kosice', 'Industry Rd', 10, 'employee', '+421905111222');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (1, 'Eva', 'Kovacova', 'eva.kovacova@email.com', '911111/1111', 2600.00, 'CZ6708000000001234567890', 'Zilina', 'High St', 30, 'employee', '+421905333444');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (2, 'Martin', 'Svoboda', 'martin.s@email.com', '890707/7777', 2100.00, 'CZ7808000000001234567890', 'Banska Bystrica', 'Low Rd', 25, 'employee', '+421905555666');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (3, 'Maria', 'Horvathova', 'maria.h@email.com', '781212/2222', 3500.00, 'CZ8908000000001234567890', 'Nitra', 'Central Sq', 1, 'employee', '+421905777888');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (5, 'Juraj', 'Mrkvicka', 'juraj.m@email.com', '850909/9999', 2300.00, 'CZ9008000000001234567890', 'Trencin', 'Guard St', 50, 'employee', '+421905999000');
--- Zákazníci (id_posType je NULL)
 INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Robert', 'Williams', 'robert.w@email.com', '750303/3456', NULL, NULL, 'Plzen', 'Oak Ln', 8, 'customer', '+420777445566');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Emily', 'Brown', 'emily.b@email.com', '880808/8765', NULL, NULL, 'Liberec', 'Pine Rd', 15, 'customer', '+420777998877');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Skrecok', 'Hravi', 'skrecok.h@email.com', '880809/8765', NULL, NULL, 'Pri krbe', 'klieta', 15, 'customer', '+421777998888');
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (4, 'Peter', 'Novak', 'peter.novak@email.com', '820202/4321', 2200.00, 'CZ5608000000001234567890', 'Kosice', 'Industry Rd', 10, 'employee', '+421905111222');
+-- PositionType (1) - Receptionist
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (1, 'Eva', 'Kovacova', 'eva.kovacova@email.com', '911111/1111', 2600.00, 'CZ6708000000001234567890', 'Zilina', 'High St', 30, 'employee', '+421905333444');
+-- PositionType (2) - Housekeeper
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (2, 'Martin', 'Svoboda', 'martin.s@email.com', '890707/7777', 2100.00, 'CZ7808000000001234567890', 'Banska Bystrica', 'Low Rd', 25, 'employee', '+421905555666');
+-- PositionType (3) - Manager
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (3, 'Maria', 'Horvathova', 'maria.h@email.com', '781212/2222', 3500.00, 'CZ8908000000001234567890', 'Nitra', 'Central Sq', 1, 'employee', '+421905777888');
+-- PositionType (5) - Security
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (5, 'Juraj', 'Mrkvicka', 'juraj.m@email.com', '850909/9999', 2300.00, 'CZ9008000000001234567890', 'Trencin', 'Guard St', 50, 'employee', '+421905999000');
+-- Zákazníci (id_posType je NULL)
 INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Anna', 'Mala', 'anna.m@email.com', '950404/4444', NULL, NULL, 'Poprad', 'Mountain Rd', 7, 'customer', '+421918111222');
 INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
@@ -387,19 +391,37 @@ INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (1
 INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (20, 130.00, 'Credit Card', TO_DATE('02/08/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 20
 INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (21, 180.00, 'Credit Card', TO_DATE('11/08/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 21
 INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (22, 300.00, 'Credit Card', TO_DATE('21/08/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 22
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (23, 500.00, 'Credit Card', TO_DATE('02/09/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 23
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (24, 750.00, 'Credit Card', TO_DATE('11/09/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 24
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (25, 100.00, 'Credit Card', TO_DATE('02/10/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 25
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (26, 150.00, 'Credit Card', TO_DATE('11/10/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 26
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (27, 250.00, 'Credit Card', TO_DATE('21/10/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 27
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (28, 500.00, 'Credit Card', TO_DATE('02/11/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 28
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (29, 750.00, 'Credit Card', TO_DATE('11/11/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 29
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (30, 1000.00, 'Credit Card', TO_DATE('21/11/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 30
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (31, 100.00, 'Credit Card', TO_DATE('02/12/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 31
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (32, 150.00, 'Credit Card', TO_DATE('11/12/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 32
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (33, 250.00, 'Credit Card', TO_DATE('21/12/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 33
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (34, 500.00, 'Credit Card', TO_DATE('02/01/2026', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 34
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (35, 750.00, 'Credit Card', TO_DATE('11/01/2026', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 35
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (20, 130.00, 'Credit Card', TO_DATE('02/08/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 21
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (21, 180.00, 'Credit Card', TO_DATE('11/08/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 22
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (22, 300.00, 'Credit Card', TO_DATE('21/08/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 23
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (23, 500.00, 'Credit Card', TO_DATE('02/09/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 24
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (24, 750.00, 'Credit Card', TO_DATE('11/09/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 25
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (25, 100.00, 'Credit Card', TO_DATE('02/10/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 26
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (26, 150.00, 'Credit Card', TO_DATE('11/10/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 27
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (27, 250.00, 'Credit Card', TO_DATE('21/10/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 28
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (28, 500.00, 'Credit Card', TO_DATE('02/11/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 29
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (29, 750.00, 'Credit Card', TO_DATE('11/11/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 30
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (30, 1000.00, 'Credit Card', TO_DATE('21/11/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 31
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (31, 100.00, 'Credit Card', TO_DATE('02/12/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 32
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (32, 150.00, 'Credit Card', TO_DATE('11/12/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 33
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (33, 250.00, 'Credit Card', TO_DATE('21/12/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 34
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (34, 500.00, 'Credit Card', TO_DATE('02/01/2026', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 35
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (35, 750.00, 'Credit Card', TO_DATE('11/01/2026', 'DD/MM/YYYY'));
 
 -- Zuzana Dlha (ID 14)
 INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (36, 80.00, 'Credit Card', TO_DATE('02/02/2026', 'DD/MM/YYYY'));
@@ -1048,6 +1070,7 @@ LEFT JOIN xfiloja00.Payment Pay ON R.id_reser = Pay.id_reser
 WHERE P.personType = 'customer'
 GROUP BY P.id_person, P.firstName, P.lastName;
 /
+
 
 SELECT
     id_person,

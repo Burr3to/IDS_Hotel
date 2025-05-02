@@ -191,6 +191,12 @@ INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, 
 VALUES (2, 'Jane', 'Smith', 'jane.smith@email.com', '850505/5678', 2000.00, 'CZ2308000000001234567890', 'Brno', 'Side St', 12, 'employee', '+420777654321');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (3, 'Alice', 'Johnson', 'alice.j@email.com', '901010/9012', 3000.00, 'CZ3408000000001234567890', 'Ostrava', 'Park Ave', 20, 'employee', '+420777112233');
+INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (NULL, 'Robert', 'Williams', 'robert.w@email.com', '750303/3456', NULL, NULL, 'Plzen', 'Oak Ln', 8, 'customer', '+420777445566');
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (NULL, 'Emily', 'Brown', 'emily.b@email.com', '880808/8765', NULL, NULL, 'Liberec', 'Pine Rd', 15, 'customer', '+420777998877');
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (NULL, 'Skrecok', 'Hravi', 'skrecok.h@email.com', '880809/8765', NULL, NULL, 'Pri krbe', 'klieta', 15, 'customer', '+421777998888');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (4, 'Peter', 'Novak', 'peter.novak@email.com', '820202/4321', 2200.00, 'CZ5608000000001234567890', 'Kosice', 'Industry Rd', 10, 'employee', '+421905111222');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
@@ -202,12 +208,6 @@ VALUES (3, 'Maria', 'Horvathova', 'maria.h@email.com', '781212/2222', 3500.00, '
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (5, 'Juraj', 'Mrkvicka', 'juraj.m@email.com', '850909/9999', 2300.00, 'CZ9008000000001234567890', 'Trencin', 'Guard St', 50, 'employee', '+421905999000');
 -- Zákazníci (id_posType je NULL)
-INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (NULL, 'Robert', 'Williams', 'robert.w@email.com', '750303/3456', NULL, NULL, 'Plzen', 'Oak Ln', 8, 'customer', '+420777445566');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (NULL, 'Emily', 'Brown', 'emily.b@email.com', '880808/8765', NULL, NULL, 'Liberec', 'Pine Rd', 15, 'customer', '+420777998877');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (NULL, 'Skrecok', 'Hravi', 'skrecok.h@email.com', '880809/8765', NULL, NULL, 'Pri krbe', 'klieta', 15, 'customer', '+421777998888');
 INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Anna', 'Mala', 'anna.m@email.com', '950404/4444', NULL, NULL, 'Poprad', 'Mountain Rd', 7, 'customer', '+421918111222');
 INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
@@ -1048,6 +1048,7 @@ LEFT JOIN xfiloja00.Payment Pay ON R.id_reser = Pay.id_reser
 WHERE P.personType = 'customer'
 GROUP BY P.id_person, P.firstName, P.lastName;
 /
+
 
 SELECT
     id_person,

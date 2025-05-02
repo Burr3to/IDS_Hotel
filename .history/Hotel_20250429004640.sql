@@ -17,10 +17,6 @@ DROP TABLE Services CASCADE CONSTRAINTS;
 DROP TABLE PositionType CASCADE CONSTRAINTS;
 DROP TABLE Person CASCADE CONSTRAINTS;
 
-DROP MATERIALIZED VIEW mv_customer_loyalty;
-DROP INDEX idx_reservation_dates;
-
-
 -- Toto nastavenie platí pre aktuálnu session
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY';
 
@@ -191,23 +187,27 @@ INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, 
 VALUES (2, 'Jane', 'Smith', 'jane.smith@email.com', '850505/5678', 2000.00, 'CZ2308000000001234567890', 'Brno', 'Side St', 12, 'employee', '+420777654321');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (3, 'Alice', 'Johnson', 'alice.j@email.com', '901010/9012', 3000.00, 'CZ3408000000001234567890', 'Ostrava', 'Park Ave', 20, 'employee', '+420777112233');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (4, 'Peter', 'Novak', 'peter.novak@email.com', '820202/4321', 2200.00, 'CZ5608000000001234567890', 'Kosice', 'Industry Rd', 10, 'employee', '+421905111222');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (1, 'Eva', 'Kovacova', 'eva.kovacova@email.com', '911111/1111', 2600.00, 'CZ6708000000001234567890', 'Zilina', 'High St', 30, 'employee', '+421905333444');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (2, 'Martin', 'Svoboda', 'martin.s@email.com', '890707/7777', 2100.00, 'CZ7808000000001234567890', 'Banska Bystrica', 'Low Rd', 25, 'employee', '+421905555666');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (3, 'Maria', 'Horvathova', 'maria.h@email.com', '781212/2222', 3500.00, 'CZ8908000000001234567890', 'Nitra', 'Central Sq', 1, 'employee', '+421905777888');
-INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
-VALUES (5, 'Juraj', 'Mrkvicka', 'juraj.m@email.com', '850909/9999', 2300.00, 'CZ9008000000001234567890', 'Trencin', 'Guard St', 50, 'employee', '+421905999000');
--- Zákazníci (id_posType je NULL)
 INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Robert', 'Williams', 'robert.w@email.com', '750303/3456', NULL, NULL, 'Plzen', 'Oak Ln', 8, 'customer', '+420777445566');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Emily', 'Brown', 'emily.b@email.com', '880808/8765', NULL, NULL, 'Liberec', 'Pine Rd', 15, 'customer', '+420777998877');
 INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Skrecok', 'Hravi', 'skrecok.h@email.com', '880809/8765', NULL, NULL, 'Pri krbe', 'klieta', 15, 'customer', '+421777998888');
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (4, 'Peter', 'Novak', 'peter.novak@email.com', '820202/4321', 2200.00, 'CZ5608000000001234567890', 'Kosice', 'Industry Rd', 10, 'employee', '+421905111222');
+-- PositionType (1) - Receptionist
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (1, 'Eva', 'Kovacova', 'eva.kovacova@email.com', '911111/1111', 2600.00, 'CZ6708000000001234567890', 'Zilina', 'High St', 30, 'employee', '+421905333444');
+-- PositionType (2) - Housekeeper
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (2, 'Martin', 'Svoboda', 'martin.s@email.com', '890707/7777', 2100.00, 'CZ7808000000001234567890', 'Banska Bystrica', 'Low Rd', 25, 'employee', '+421905555666');
+-- PositionType (3) - Manager
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (3, 'Maria', 'Horvathova', 'maria.h@email.com', '781212/2222', 3500.00, 'CZ8908000000001234567890', 'Nitra', 'Central Sq', 1, 'employee', '+421905777888');
+-- PositionType (5) - Security
+INSERT INTO Person (id_posType, firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
+VALUES (5, 'Juraj', 'Mrkvicka', 'juraj.m@email.com', '850909/9999', 2300.00, 'CZ9008000000001234567890', 'Trencin', 'Guard St', 50, 'employee', '+421905999000');
+-- Zákazníci (id_posType je NULL)
 INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
 VALUES (NULL, 'Anna', 'Mala', 'anna.m@email.com', '950404/4444', NULL, NULL, 'Poprad', 'Mountain Rd', 7, 'customer', '+421918111222');
 INSERT INTO Person (id_posType ,firstName, lastName, mail, birthNumber, salary, bankAccount, addressTown, addressStreet, addressNum, personType, telephone)
@@ -381,25 +381,43 @@ INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (1
 INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (16, 540.00, 'Cash', TO_DATE('12/03/2025', 'DD/MM/YYYY'));
 
 -- Viera Stredna (ID 16), Res 17
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (17, 130.00, 'Credit Card', TO_DATE('03/07/2025', 'DD/MM/YYYY')); -- Viera Stredna (ID 16), Res 17
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (18, 130.00, 'Credit Card', TO_DATE('11/07/2025', 'DD/MM/YYYY')); -- Anna Mala (ID 12), Res 18
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (19, 180.00, 'Credit Card', TO_DATE('21/07/2025', 'DD/MM/YYYY')); -- Anna Mala (ID 12), Res 19
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (20, 130.00, 'Credit Card', TO_DATE('02/08/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 20
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (21, 180.00, 'Credit Card', TO_DATE('11/08/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 21
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (22, 300.00, 'Credit Card', TO_DATE('21/08/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 22
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (23, 500.00, 'Credit Card', TO_DATE('02/09/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 23
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (24, 750.00, 'Credit Card', TO_DATE('11/09/2025', 'DD/MM/YYYY')); -- Emily Brown (ID 10), Res 24
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (25, 100.00, 'Credit Card', TO_DATE('02/10/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 25
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (26, 150.00, 'Credit Card', TO_DATE('11/10/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 26
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (27, 250.00, 'Credit Card', TO_DATE('21/10/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 27
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (28, 500.00, 'Credit Card', TO_DATE('02/11/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 28
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (29, 750.00, 'Credit Card', TO_DATE('11/11/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 29
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (30, 1000.00, 'Credit Card', TO_DATE('21/11/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 30
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (31, 100.00, 'Credit Card', TO_DATE('02/12/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 31
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (32, 150.00, 'Credit Card', TO_DATE('11/12/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 32
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (33, 250.00, 'Credit Card', TO_DATE('21/12/2025', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 33
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (34, 500.00, 'Credit Card', TO_DATE('02/01/2026', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 34
-INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (35, 750.00, 'Credit Card', TO_DATE('11/01/2026', 'DD/MM/YYYY')); -- Robert Williams (ID 9), Res 35
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (17, 130.00, 'Credit Card', TO_DATE('03/07/2025', 'DD/MM/YYYY'));
+-- Anna Mala (ID 12), Res 18
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (18, 130.00, 'Credit Card', TO_DATE('11/07/2025', 'DD/MM/YYYY'));
+-- Anna Mala (ID 12), Res 19
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (19, 180.00, 'Credit Card', TO_DATE('21/07/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 20
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (20, 130.00, 'Credit Card', TO_DATE('02/08/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 21
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (21, 180.00, 'Credit Card', TO_DATE('11/08/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 22
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (22, 300.00, 'Credit Card', TO_DATE('21/08/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 23
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (23, 500.00, 'Credit Card', TO_DATE('02/09/2025', 'DD/MM/YYYY'));
+-- Emily Brown (ID 10), Res 24
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (24, 750.00, 'Credit Card', TO_DATE('11/09/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 25
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (25, 100.00, 'Credit Card', TO_DATE('02/10/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 26
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (26, 150.00, 'Credit Card', TO_DATE('11/10/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 27
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (27, 250.00, 'Credit Card', TO_DATE('21/10/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 28
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (28, 500.00, 'Credit Card', TO_DATE('02/11/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 29
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (29, 750.00, 'Credit Card', TO_DATE('11/11/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 30
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (30, 1000.00, 'Credit Card', TO_DATE('21/11/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 31
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (31, 100.00, 'Credit Card', TO_DATE('02/12/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 32
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (32, 150.00, 'Credit Card', TO_DATE('11/12/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 33
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (33, 250.00, 'Credit Card', TO_DATE('21/12/2025', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 34
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (34, 500.00, 'Credit Card', TO_DATE('02/01/2026', 'DD/MM/YYYY'));
+-- Robert Williams (ID 9), Res 35
+INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (35, 750.00, 'Credit Card', TO_DATE('11/01/2026', 'DD/MM/YYYY'));
 
 -- Zuzana Dlha (ID 14)
 INSERT INTO Payment (id_reser, totalPrice, paymentMethod, paymentDate) VALUES (36, 80.00, 'Credit Card', TO_DATE('02/02/2026', 'DD/MM/YYYY'));
@@ -438,12 +456,14 @@ INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (4, TO_DATE('01/01/2024', 'DD/MM/YYYY'), TO_DATE('28/04/2024', 'DD/MM/YYYY'), 200.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (5, TO_DATE('01/01/2024', 'DD/MM/YYYY'), TO_DATE('28/04/2024', 'DD/MM/YYYY'), 350.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (6, TO_DATE('01/01/2024', 'DD/MM/YYYY'), TO_DATE('28/04/2024', 'DD/MM/YYYY'), 500.00);
+
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (1, TO_DATE('01/04/2024', 'DD/MM/YYYY'), TO_DATE('28/08/2024', 'DD/MM/YYYY'), 75.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (2, TO_DATE('01/04/2024', 'DD/MM/YYYY'), TO_DATE('28/08/2024', 'DD/MM/YYYY'), 100.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (3, TO_DATE('01/04/2024', 'DD/MM/YYYY'), TO_DATE('28/08/2024', 'DD/MM/YYYY'), 125.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (4, TO_DATE('01/04/2024', 'DD/MM/YYYY'), TO_DATE('28/08/2024', 'DD/MM/YYYY'), 250.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (5, TO_DATE('01/04/2024', 'DD/MM/YYYY'), TO_DATE('28/08/2024', 'DD/MM/YYYY'), 400.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (6, TO_DATE('01/04/2024', 'DD/MM/YYYY'), TO_DATE('28/08/2024', 'DD/MM/YYYY'), 600.00);
+
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (1, TO_DATE('01/08/2024', 'DD/MM/YYYY'), TO_DATE('28/12/2024', 'DD/MM/YYYY'), 100.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (2, TO_DATE('01/08/2024', 'DD/MM/YYYY'), TO_DATE('28/12/2024', 'DD/MM/YYYY'), 150.00);
 INSERT INTO Price_in_date (id_room_type, dateFrom, dateTo, priceConstant) VALUES (3, TO_DATE('01/08/2024', 'DD/MM/YYYY'), TO_DATE('28/12/2024', 'DD/MM/YYYY'), 250.00);
@@ -583,8 +603,8 @@ SELECT Ro.roomNumber, R.roomTypeType, P.dateFrom, P.dateTo, P.priceConstant
 FROM Room_type R
 INNER JOIN Room Ro ON Ro.id_room_type=R.id_room_type
 INNER JOIN Price_in_date P ON P.id_room_type=R.id_room_type
-    AND P.dateFrom < TO_DATE('01/02/2024', 'DD/MM/YYYY')
-    AND P.dateTo > TO_DATE('01/04/2024', 'DD/MM/YYYY');
+    -- Zmena formatu datumu v TO_DATE
+    AND P.dateFrom < TO_DATE('01/02/2024', 'DD/MM/YYYY') AND P.dateTo > TO_DATE('01/04/2024', 'DD/MM/YYYY');
 
 -- Uloha: join 4 tables: xfiloja00
 -- Opis: Zobrazi aktualne rezervácie s poctom vybranych sluzieb a celkovu cenu rezervacie vo zvolenom datume pobytu
@@ -649,26 +669,11 @@ WHERE Person.ID_PERSON IN (
     WHERE Reservation.DATEFROM <= TO_DATE('04/05/2024', 'DD/MM/YYYY') AND Reservation.DATETO >= TO_DATE('01/07/2024', 'DD/MM/YYYY')
 );
 
--- Odovzdanie 4
 
 --------------------------------------------
 ---------------- PROCEDURES ----------------
---------------------------------------------
 
-------- Procedúra: showAvailableRooms
--- Účel a Popis funkčnosti:
---   Táto procedúra slúži ako hlavné rozhranie pre zákazníkov hotela na vyhľadávanie
---   dostupných izieb prostredníctvom webovej stránky alebo inej klientskej aplikácie.
---   Umožňuje filtrovať izby na základe viacerých voliteľných kritérií:
---   typ izby (p_roomtypetype), minimálna požadovaná kapacita hostí (p_guestcount),
---   predpokladané dátumy pobytu (p_datefrom, p_dateto), maximálna akceptovaná cena
---   za noc (p_priceconstant) a prítomnosť konkrétneho vybavenia (p_equipmentname).
---
---   Kľúčom k vyhľadávaniu je zistenie reálnej dostupnosti izby v požadovanom časovom
---   rozsahu. Procedúra nájde iba izby so statusom 'Available' alebo 'Cleaning',
---   pre ktoré zároveň neexistujú žiadne konfliktné (potvrdené alebo čakajúce)
---   rezervácie v zadanom časovom rozmedzí.
-
+-- Main function that the customer will call when trying to find available dates from the website. Allows him to select custom parameters and leave some blank.
 create or replace procedure showAvailableRooms (
    p_roomtypetype  in varchar default null,
    p_guestcount    in number default null,
@@ -687,7 +692,7 @@ create or replace procedure showAvailableRooms (
         from Room R
         inner join Room_type Rt on R.id_room_type = Rt.id_room_type
         inner join Price_in_date P on R.id_room_type = P.id_room_type
-        LEFT join Includes Inc on R.id_room = Inc.id_room -- aby zahrnul aj izby bez špecifického vybavenia
+        LEFT join Includes Inc on R.id_room = Inc.id_room
         LEFT join Equipment Eq on Eq.id_equip = Inc.id_equip
         WHERE
             R.roomStatus IN ('Available', 'Cleaning')
@@ -697,7 +702,7 @@ create or replace procedure showAvailableRooms (
             AND (p_priceConstant IS NULL OR P.priceConstant <= p_priceConstant)
             AND P.dateFrom <= NVL(p_dateTo, P.dateFrom)
             AND P.dateTo   >= NVL(p_dateFrom, P.dateTo)
-            AND NOT EXISTS ( -- prekrývajúce sa rezervácie
+            AND NOT EXISTS (
                 SELECT 1
                 FROM Reservation Res
                 WHERE Res.id_room = R.id_room
@@ -731,7 +736,6 @@ create or replace procedure showAvailableRooms (
 
 begin
 
-    -- Kontrola platnosti zadaných parametrov (typ izby, vybavenie) proti existujúcim hodnotám
     IF p_roomTypeType IS NOT NULL THEN
         SELECT COUNT(*) INTO v_dummy FROM Room_type WHERE roomTypeType = p_roomTypeType;
         IF v_dummy = 0 THEN
@@ -746,10 +750,9 @@ begin
         END IF;
     END IF;
 
-    -- Kontrola platnosti rozsahu dátumov
+
     IF p_dateFrom IS NOT NULL AND p_dateTo IS NOT NULL AND p_dateFrom > p_dateTo THEN
-        DBMS_OUTPUT.PUT_LINE('Chyba: Dátum "Od" (' || TO_CHAR(p_dateFrom, 'DD/MM/YYYY') ||
-        ') nesmie byť po dátume "Do" (' || TO_CHAR(p_dateTo, 'DD/MM/YYYY') || ').');
+        DBMS_OUTPUT.PUT_LINE('Chyba: Dátum "Od" (' || TO_CHAR(p_dateFrom, 'DD/MM/YYYY') || ') nesmie byť po dátume "Do" (' || TO_CHAR(p_dateTo, 'DD/MM/YYYY') || ').');
         RETURN;
     END IF;
 
@@ -760,7 +763,6 @@ begin
 
     OPEN availableRoomsCursor;
 
-    -- Výpis hlavičky výstupnej tabuľky
     DBMS_OUTPUT.PUT_LINE(RPAD('ID Izby', 8) || RPAD('Typ izby', 20) || RPAD('Miesto', 10) || RPAD('Cena Od', 12) || RPAD('Cena Do', 12) || RPAD('Cena', 10));
     DBMS_OUTPUT.PUT_LINE(RPAD('-------', 8) || RPAD('---------------', 20) || RPAD('----------', 10) || RPAD('----------', 12) || RPAD('----------', 12) || RPAD('----------', 10));
 
@@ -808,20 +810,6 @@ EXEC showAvailableRooms(p_roomTypeType => 'presidential suite');
 EXEC showAvailableRooms(p_equipmentName => 'Sauna');
 
 
-------- Procedúra: showRoomsWithEmployeesHistory
--- Účel a Popis funkčnosti:
---   Táto procedúra zobrazuje historiu činností zamestnancov a administrátorov
---   vzťahujúcich sa k jednotlivým izbám. Umožňuje sledovať, kto (zamestnanec/admin),
---   kedy (časová známka), akú izbu (číslo a typ) spravoval/manipuloval a aký
---   bol popis tejto činnosti (napr. "Checked in guest", "Cleaned room",
---   "Performed repair").
---
---   Procedúra poskytuje voliteľné filtre, ktoré umožňujú zúžiť vyhľadávanie:
---   podľa mena a priezviska zamestnanca/administrátora, typu izby, a časového
---   rozsahu, v ktorom sa činnosť vykonala.
---
---   Je užitočná pre účely auditu, sledovania úloh, vyšetrovania incidentov,
---   alebo jednoduchého prehľadu o manipulácii s izbami.
 create or replace procedure showRoomsWithEmployeesHistory (
     p_lastName      in varchar default null,
     p_firstName     in varchar default null,
@@ -962,6 +950,88 @@ EXEC showRoomsWithEmployeesHistory(p_firstName => 'Jane', p_lastName => 'Smith',
 EXEC showRoomsWithEmployeesHistory(p_firstName => 'Peter');
 
 
+GRANT SELECT ON xfiloja00.Person TO xfiloja00;
+GRANT SELECT ON xfiloja00.Reservation TO xfiloja00;
+GRANT SELECT ON xfiloja00.Payment TO xfiloja00;
+
+
+
+
+DROP MATERIALIZED VIEW mv_customer_loyalty;
+
+CREATE MATERIALIZED VIEW mv_customer_loyalty
+BUILD IMMEDIATE -- Naplní pohľad dátami ihneď pri vytvorení
+REFRESH COMPLETE ON DEMAND -- Určuje stratégiu refreshu: úplné prebudovanie, spustené manuálne
+AS
+-- Toto je presne ten SELECT, ktorý agreguje dáta pre každého zákazníka
+SELECT
+    P.id_person,
+    P.firstName,
+    P.lastName,
+    COUNT(R.id_reser) AS TotalReservations,
+    SUM(Pay.totalPrice) AS TotalSpent, -- SUM ignoruje NULL hodnoty, čo je pre súčet OK
+    MIN(R.dateFrom) AS FirstVisitDate,
+    MAX(R.dateTo) AS LastVisitDate
+FROM Person P
+INNER JOIN Reservation R ON P.id_person = R.id_person
+LEFT JOIN Payment Pay ON R.id_reser = Pay.id_reser
+WHERE P.personType = 'customer'
+GROUP BY P.id_person, P.firstName, P.lastName;
+/
+
+-- Ak potrebujete pridať komentár k MV (nepovinné)
+COMMENT ON MATERIALIZED VIEW mv_customer_loyalty IS 'Pre-calculated customer loyalty data for reporting';
+/
+
+SET SERVEROUTPUT ON;
+
+-- Spustí refresh materializovaného pohľadu
+EXEC DBMS_MVIEW.REFRESH('mv_customer_loyalty');
+/
+
+
+-- Dotaz na vernostné tiery POUŽÍVAJÚCI MATERIALIZOVANÝ POHĽAD
+SELECT
+    id_person,
+    firstName,
+    lastName,
+    TotalReservations,
+    NVL(TotalSpent, 0) AS TotalSpent, -- Zobrazenie 0 namiesto NULL pre minutú sumu
+    FirstVisitDate,
+    LastVisitDate,
+    -- CASE statement na priradenie vernostného statusu/kategórie
+CASE
+        WHEN TotalReservations >= 40 OR NVL(TotalSpent, 0) >= 10000 THEN 'Obsidian Tier'
+        WHEN TotalReservations >= 25 OR NVL(TotalSpent, 0) >= 5000 THEN 'Diamond Tier'
+        WHEN TotalReservations >= 15 OR NVL(TotalSpent, 0) >= 2500 THEN 'Platinum Tier'
+        WHEN TotalReservations >= 7 OR NVL(TotalSpent, 0) >= 1600 THEN 'Gold Tier'
+        WHEN TotalReservations >= 4 OR NVL(TotalSpent, 0) >= 700 THEN 'Silver Tier'
+        WHEN TotalReservations >= 1 THEN 'Bronze Tier'
+        ELSE 'Unknown Tier' -- Táto vetva by sa nemala u zákazníkov s >0 rezerváciami z MV vyskytnúť
+    END AS LoyaltyStatus
+FROM mv_customer_loyalty -- <<< POZOR! Tu je rozdiel, pýtame sa na MV
+ORDER BY
+    NVL(TotalSpent, 0) DESC,        -- V rámci kategórie podľa minutej sumy (zostupne)
+    TotalReservations DESC, -- Potom podľa počtu návštev (zostupne)
+    lastName,
+    firstName;
+
+
+-- Porovnanie výkonu pomocou EXPLAIN PLAN
+
+-- Povolí výpis plánu vykonania
+SET LINESIZE 130
+SET PAGESIZE 0
+SET SERVEROUTPUT ON;
+SET FEEDBACK OFF; -- Skryje "rows selected" správu po EXPLAIN PLAN
+
+-- Kód na získanie a zobrazenie plánu vykonania
+COLUMN PLAN_TABLE_OUTPUT FORMAT A130
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY(NULL, NULL, 'BASIC +ROWS +BYTES'));
+
+-- Krok 1: Vysvetlenie plánu PRE PôVODNÝ komplexný dotaz (s CTE)
+-- Vložte SEM celý váš pôvodný SELECT dotaz s CTE
+EXPLAIN PLAN FOR
 WITH CustomerReservationData AS (
     SELECT
         P.id_person,
@@ -1013,42 +1083,12 @@ ORDER BY
     acs.firstName;
 /
 
+-- Zobrazenie plánu pre PôVODNÝ dotaz
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
----------------------------------------------------------
------------ ACCESS / MATERIALIZED VIEW ------------------
----------------------------------------------------------
-
-GRANT SELECT ON Person TO xbockaa00;
-GRANT SELECT ON Reservation TO xbockaa00;
-GRANT SELECT ON Payment TO xbockaa00;
-GRANT SELECT ON Room TO xbockaa00;
-GRANT SELECT ON Room_type TO xbockaa00;
-GRANT SELECT ON Price_in_date TO xbockaa00;
-GRANT SELECT ON Managed_by TO xbockaa00;
-GRANT SELECT ON Equipment TO xbockaa00;
-GRANT SELECT ON Includes TO xbockaa00;
-GRANT SELECT ON Assigned_to TO xbockaa00;
-GRANT SELECT ON PositionType TO xbockaa00;
-
-
-CREATE MATERIALIZED VIEW xbockaa00.mv_customer_loyalty
-REFRESH COMPLETE ON DEMAND
-AS
-SELECT
-    P.id_person,
-    P.firstName,
-    P.lastName,
-    COUNT(R.id_reser) AS TotalReservations,
-    SUM(Pay.totalPrice) AS TotalSpent,
-    MIN(R.dateFrom) AS FirstVisitDate,
-    MAX(R.dateTo) AS LastVisitDate
-FROM xfiloja00.Person P       -- Používa tabuľky s prefixom schémy prvého používateľa
-INNER JOIN xfiloja00.Reservation R ON P.id_person = R.id_person
-LEFT JOIN xfiloja00.Payment Pay ON R.id_reser = Pay.id_reser
-WHERE P.personType = 'customer'
-GROUP BY P.id_person, P.firstName, P.lastName;
-/
-
+-- Krok 2: Vysvetlenie plánu PRE dotaz POUŽÍVAJÚCI Materializovaný Pohľad
+-- Vložte SEM váš SELECT dotaz, ktorý sa pýta na MV (bod 3)
+EXPLAIN PLAN FOR
 SELECT
     id_person,
     firstName,
@@ -1066,7 +1106,7 @@ SELECT
         WHEN TotalReservations >= 1 THEN 'Bronze Tier'
         ELSE 'Unknown Tier'
     END AS LoyaltyStatus
-FROM xbockaa00.mv_customer_loyalty -- <-- Prístup k MV druhého používateľa s prefixom schémy
+FROM mv_customer_loyalty -- <<< Používa MV
 ORDER BY
     NVL(TotalSpent, 0) DESC,
     TotalReservations DESC,
@@ -1074,68 +1114,83 @@ ORDER BY
     firstName;
 /
 
-
-
--------------------------------------------------
----------------- INDEX / EXPLAIN ----------------
--------------------------------------------------
-
--- 1. Zobrazenie plánu vykonania BEZ indexu
-
-
-
--- Nastavenia pre EXPLAIN PLAN výstup
-SET LINESIZE 130
-SET PAGESIZE 0
-SET FEEDBACK 0;
-
-
-BEGIN
-   DBMS_OUTPUT.PUT_LINE('-- EXPLAIN PLAN pre dotaz BEZ INDEXU na Reservation(dateFrom, dateTo):');
-END;
-/
-
-
--- Príkaz na vysvetlenie plánu pre dotaz BEZ indexu
-EXPLAIN PLAN FOR
-SELECT R.id_reser, R.dateFrom, R.dateTo, R.reservationStatus, P.firstName, P.lastName
-FROM Reservation R
-JOIN Person P ON R.id_person = P.id_person
-WHERE R.dateFrom >= TO_DATE('01/10/2024', 'DD/MM/YYYY')
-  AND R.dateTo   <= TO_DATE('31/12/2024', 'DD/MM/YYYY')
-  AND R.reservationStatus = 'Confirmed';
-/
-
--- Zobrazenie plánu pre dotaz bez indexu
+-- Zobrazenie plánu pre dotaz nad MV
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
-
--- 2. Vytvorenie indexu
-CREATE INDEX idx_reservation_dates ON Reservation (dateFrom, dateTo);
-/
-
--- 3. Zobrazenie plánu vykonania S indexom
-BEGIN
-   DBMS_OUTPUT.PUT_LINE('-- EXPLAIN PLAN pre dotaz S INDEXOM na Reservation(dateFrom, dateTo):');
-END;
-/
-
-
-EXPLAIN PLAN FOR
-SELECT R.id_reser, R.dateFrom, R.dateTo, R.reservationStatus, P.firstName, P.lastName
-FROM Reservation R
-JOIN Person P ON R.id_person = P.id_person
-WHERE R.dateFrom >= TO_DATE('01/10/2024', 'DD/MM/YYYY')
-  AND R.dateTo   <= TO_DATE('31/12/2024', 'DD/MM/YYYY')
-  AND R.reservationStatus = 'Confirmed';
-/
-
--- Zobrazenie plánu pre dotaz s indexom
-SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
-
--- Reset nastavení EXPLAIN PLAN
-SET FEEDBACK 6;
+-- Reset nastavení
+SET FEEDBACK ON;
 SET PAGESIZE 50;
 SET LINESIZE 80;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Customer loyalty program
+WITH CustomerReservationData AS (
+    SELECT
+        P.id_person,
+        P.firstName,
+        P.lastName,
+        R.id_reser,
+        R.dateFrom,
+        R.dateTo,
+        Pay.totalPrice -- Môže byť NULL, ak platba ešte nebola zaznamenaná pre danú rezerváciu
+    FROM Person P
+    INNER JOIN Reservation R ON P.id_person = R.id_person -- Zahrnie len osoby, ktoré majú aspoň 1 rezerváciu
+    LEFT JOIN Payment Pay ON R.id_reser = Pay.id_reser    -- Pripojí platbu, ak existuje
+    WHERE P.personType = 'customer' -- Len zákazníci nás zaujímajú pre vernostný program
+),
+AggregatedCustomerSpending AS (
+    -- CTE 2: Agregácia dát pre každého zákazníka
+    -- Zrátame počet rezervácií, celkovú minutú sumu, prvý a posledný dátum návštevy
+    SELECT
+        id_person,
+        firstName,
+        lastName,
+        COUNT(id_reser) AS TotalReservations,           -- Počet rezervácií pre zákazníka
+        SUM(totalPrice) AS TotalSpent,                 -- Celková minutá suma (NULL sa ignoruje, čo je pre sumu OK)
+        MIN(dateFrom)   AS FirstVisitDate,             -- Dátum prvej návštevy
+        MAX(dateTo)     AS LastVisitDate               -- Dátum poslednej návštevy
+    FROM CustomerReservationData
+    GROUP BY id_person, firstName, lastName -- Zoskupenie podľa zákazníka
+)
+-- Finálny SELECT: Pridanie vernostného statusu pomocou CASE
+SELECT
+    acs.id_person,
+    acs.firstName,
+    acs.lastName,
+    acs.TotalReservations,
+    NVL(acs.TotalSpent, 0) AS TotalSpent, -- Zobrazenie 0 namiesto NULL pre minutú sumu
+    acs.FirstVisitDate,
+    acs.LastVisitDate,
+    -- CASE statement na priradenie vernostného statusu/kategórie
+CASE
+        WHEN acs.TotalReservations >= 40 OR NVL(acs.TotalSpent, 0) >= 10000 THEN 'Obsidian Tier'
+        WHEN acs.TotalReservations >= 25 OR NVL(acs.TotalSpent, 0) >= 5000 THEN 'Diamond Tier'
+        WHEN acs.TotalReservations >= 15 OR NVL(acs.TotalSpent, 0) >= 2500 THEN 'Platinum Tier'
+        WHEN acs.TotalReservations >= 7 OR NVL(acs.TotalSpent, 0) >= 1600 THEN 'Gold Tier'
+        WHEN acs.TotalReservations >= 4 OR NVL(acs.TotalSpent, 0) >= 700 THEN 'Silver Tier'
+        WHEN acs.TotalReservations >= 1 THEN 'Bronze Tier' -- Táto podmienka je teraz POSLEDNÁ z tierov
+        ELSE 'Unknown Tier'
+    END AS LoyaltyStatus
+FROM AggregatedCustomerSpending acs
+-- Voliteľné: Zoradenie podľa vernostného statusu a potom podľa minutej sumy/počtu návštev
+ORDER BY
+    acs.TotalSpent DESC,        -- V rámci kategórie podľa minutej sumy (zostupne)
+    acs.TotalReservations DESC, -- Potom podľa počtu návštev (zostupne)
+    acs.lastName,
+    acs.firstName;
 
 COMMIT;

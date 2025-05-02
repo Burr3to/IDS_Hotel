@@ -610,7 +610,7 @@ ORDER BY count(*);
 SELECT P.firstName, P.lastName as lastname, count(R.id_personEmploy) as pocetRezervacii
 FROM Person P
 INNER JOIN Reservation R ON R.id_personEmploy = P.id_person
-GROUP BY P.id_person, P.firstName, P.lastName
+GROUP BY P.id_person, P.firstName, P.lastName;
 ORDER BY count(R.id_personEmploy) DESC;
 
 -- Uloha: predikat exists: xbockaa00
@@ -1048,6 +1048,7 @@ LEFT JOIN xfiloja00.Payment Pay ON R.id_reser = Pay.id_reser
 WHERE P.personType = 'customer'
 GROUP BY P.id_person, P.firstName, P.lastName;
 /
+
 
 SELECT
     id_person,

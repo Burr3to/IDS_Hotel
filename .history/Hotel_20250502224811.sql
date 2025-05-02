@@ -1049,6 +1049,7 @@ WHERE P.personType = 'customer'
 GROUP BY P.id_person, P.firstName, P.lastName;
 /
 
+
 SELECT
     id_person,
     firstName,
