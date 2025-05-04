@@ -19,7 +19,6 @@ DROP TABLE Person CASCADE CONSTRAINTS;
 
 DROP MATERIALIZED VIEW mv_customer_loyalty;
 DROP INDEX idx_reservation_dates;
-DROP INDEX idx_assigned_to_reser;
 
 
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY';
@@ -1154,11 +1153,13 @@ SET FEEDBACK 0;
 --        a celkovú cenu pre rezervácie, ktoré majú priradenú aspoň jednu službu.
 --        Používa 4 tabuľky (Reservation, Assigned_to, Payment, Room),
 --        agreguje pomocou COUNT a grupuje výsledky.
-
+-- Na obhajobe: Vysvetlite kroky v pláne vykonania pred a po vytvorení indexu.
+--              Objasnite, ako index na Assigned_to(id_reser) pomohol zrýchliť join
+--              s tabuľkou Reservation a následnú agregáciu.
 
 -- 1.1. Zobrazenie plánu vykonania BEZ optimalizácie pre tento dotaz
 BEGIN
-   DBMS_OUTPUT.PUT_LINE('-- EXPLAIN PLAN pre dotaz s JOINom, Agregáciou a GROUP BY (BEZ  indexu):');
+   DBMS_OUTPUT.PUT_LINE('-- EXPLAIN PLAN pre dotaz s JOINom, Agregáciou a GROUP BY (BEZ dodatočného indexu):');
 END;
 /
 
@@ -1177,6 +1178,10 @@ order by Ro.roomNumber;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 -- 1.2. Vytvorenie indexu pre optimalizáciu tohto agregačného dotazu
+-- Navrhnutá optimalizácia: Vytvorenie indexu na cudzí kľúc id_reser v Assigned_to,
+-- ktorý sa používa v JOIN podmienke a má veľký vplyv na spajanie s tabuľkou Reservation.
+-- Tento index by mohol zlepšiť výkonnosť joinu a následnej agregácie
+-- ak tabuľka Assigned_to obsahuje mnoho záznamov na jednu rezerváciu.
 CREATE INDEX idx_assigned_to_reser ON Assigned_to (id_reser);
 /
 
@@ -1198,6 +1203,7 @@ order by Ro.roomNumber;
 /
 
 -- Zobrazenie plánu
+-- Porovnajte tento plan s planom v 1.1. Hladajte zmeny v spôsobe pristupu k Assigned_to alebo v JOIN metode.
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 
@@ -1209,8 +1215,12 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 --        s filtrovaním podľa rozsahu dátumov.
 -- Dotaz: Vyberá potvrdené rezervácie v zadanom dátumovom rozsahu (filtre na dateFrom, dateTo)
 --        a spája ich s informáciami o zákazníkovi.
+-- Na obhajobe: Vysvetlite rozdiel v pláne vykonania pred a po vytvorení indexu
+--              idx_reservation_dates. Objasnite, ako tento index pomohol
+--              zrýchliť vyhľadávanie riadkov v tabuľke Reservation.
 
 -- 2.1. Zobrazenie plánu vykonania BEZ indexu na Reservation(dateFrom, dateTo)
+-- (Tento index bol zrušený na začiatku skriptu príkazom DROP INDEX)
 BEGIN
    DBMS_OUTPUT.PUT_LINE('-- EXPLAIN PLAN pre dotaz BEZ INDEXU na Reservation(dateFrom, dateTo):');
 END;
@@ -1227,10 +1237,13 @@ WHERE R.dateFrom >= TO_DATE('01/10/2024', 'DD/MM/YYYY')
 /
 
 -- Zobrazenie plánu pre dotaz bez indexu
+-- Analyzujte výstup pre operácie prístupu k tabuľke Reservation (napr. TABLE ACCESS FULL).
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 
 -- 2.2. Vytvorenie indexu na Reservation(dateFrom, dateTo)
+-- Vytvárame zložený B-strom index na stĺpcoch dateFrom a dateTo, ktoré sú kľúčové
+-- pre filtrovanie riadkov v demonštrovanom dotaze.
 CREATE INDEX idx_reservation_dates ON Reservation (dateFrom, dateTo);
 /
 
@@ -1250,8 +1263,11 @@ WHERE R.dateFrom >= TO_DATE('01/10/2024', 'DD/MM/YYYY')
 /
 
 -- Zobrazenie plánu pre dotaz s indexom
+-- Analyzujte výstup pre zmeny v prístupe k tabuľke Reservation. Očakáva sa operácia
+-- ako Index Range Scan na indexe idx_reservation_dates.
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
+-- Reset nastavení EXPLAIN PLAN na pôvodné hodnoty
 SET FEEDBACK 6;
 SET PAGESIZE 50;
 SET LINESIZE 80;

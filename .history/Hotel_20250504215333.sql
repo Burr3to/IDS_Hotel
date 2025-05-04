@@ -1250,8 +1250,11 @@ WHERE R.dateFrom >= TO_DATE('01/10/2024', 'DD/MM/YYYY')
 /
 
 -- Zobrazenie plánu pre dotaz s indexom
+-- Analyzujte výstup pre zmeny v prístupe k tabuľke Reservation. Očakáva sa operácia
+-- ako Index Range Scan na indexe idx_reservation_dates.
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
+-- Reset nastavení EXPLAIN PLAN na pôvodné hodnoty
 SET FEEDBACK 6;
 SET PAGESIZE 50;
 SET LINESIZE 80;

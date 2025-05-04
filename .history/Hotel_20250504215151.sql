@@ -1231,6 +1231,8 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 
 -- 2.2. Vytvorenie indexu na Reservation(dateFrom, dateTo)
+-- Vytvárame zložený B-strom index na stĺpcoch dateFrom a dateTo, ktoré sú kľúčové
+-- pre filtrovanie riadkov v demonštrovanom dotaze.
 CREATE INDEX idx_reservation_dates ON Reservation (dateFrom, dateTo);
 /
 
@@ -1250,8 +1252,11 @@ WHERE R.dateFrom >= TO_DATE('01/10/2024', 'DD/MM/YYYY')
 /
 
 -- Zobrazenie plánu pre dotaz s indexom
+-- Analyzujte výstup pre zmeny v prístupe k tabuľke Reservation. Očakáva sa operácia
+-- ako Index Range Scan na indexe idx_reservation_dates.
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
+-- Reset nastavení EXPLAIN PLAN na pôvodné hodnoty
 SET FEEDBACK 6;
 SET PAGESIZE 50;
 SET LINESIZE 80;

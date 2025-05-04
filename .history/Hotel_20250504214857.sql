@@ -19,7 +19,6 @@ DROP TABLE Person CASCADE CONSTRAINTS;
 
 DROP MATERIALIZED VIEW mv_customer_loyalty;
 DROP INDEX idx_reservation_dates;
-DROP INDEX idx_assigned_to_reser;
 
 
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY';
@@ -1211,6 +1210,7 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 --        a spája ich s informáciami o zákazníkovi.
 
 -- 2.1. Zobrazenie plánu vykonania BEZ indexu na Reservation(dateFrom, dateTo)
+-- (Tento index bol zrušený na začiatku skriptu príkazom DROP INDEX)
 BEGIN
    DBMS_OUTPUT.PUT_LINE('-- EXPLAIN PLAN pre dotaz BEZ INDEXU na Reservation(dateFrom, dateTo):');
 END;
@@ -1227,10 +1227,13 @@ WHERE R.dateFrom >= TO_DATE('01/10/2024', 'DD/MM/YYYY')
 /
 
 -- Zobrazenie plánu pre dotaz bez indexu
+-- Analyzujte výstup pre operácie prístupu k tabuľke Reservation (napr. TABLE ACCESS FULL).
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 
 -- 2.2. Vytvorenie indexu na Reservation(dateFrom, dateTo)
+-- Vytvárame zložený B-strom index na stĺpcoch dateFrom a dateTo, ktoré sú kľúčové
+-- pre filtrovanie riadkov v demonštrovanom dotaze.
 CREATE INDEX idx_reservation_dates ON Reservation (dateFrom, dateTo);
 /
 
@@ -1250,8 +1253,11 @@ WHERE R.dateFrom >= TO_DATE('01/10/2024', 'DD/MM/YYYY')
 /
 
 -- Zobrazenie plánu pre dotaz s indexom
+-- Analyzujte výstup pre zmeny v prístupe k tabuľke Reservation. Očakáva sa operácia
+-- ako Index Range Scan na indexe idx_reservation_dates.
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
+-- Reset nastavení EXPLAIN PLAN na pôvodné hodnoty
 SET FEEDBACK 6;
 SET PAGESIZE 50;
 SET LINESIZE 80;
