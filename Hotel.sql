@@ -549,21 +549,10 @@ INSERT INTO Assigned_to (id_serv, id_reser) VALUES (6, 15);-- Rezervácia 15, Ai
 
 COMMIT;
 
--- SELECT * FROM Person;
--- SELECT * FROM PositionType;
--- SELECT * FROM Services;
--- SELECT * FROM Reservation;
--- SELECT * FROM Room;
--- SELECT * FROM Room_type;
--- SELECT * FROM Price_in_date;
--- SELECT * FROM Managed_by;
--- SELECT * FROM Includes;
--- SELECT * FROM Equipment;
--- SELECT * FROM Payment;
--- SELECT * FROM Assigned_to;
+-----------------------------
+-- Odovzdanie 3: Project03 --
+-----------------------------
 
-
--- Odovzdanie 3: Project03
 
 -- Uloha: join 2 tables: xbockaa00
 -- Opis: Zobrazi jednotlivych zamestnancov a ich pracovnu poziciu (+ povinnosti)
@@ -649,7 +638,108 @@ WHERE Person.ID_PERSON IN (
     WHERE Reservation.DATEFROM <= TO_DATE('04/05/2024', 'DD/MM/YYYY') AND Reservation.DATETO >= TO_DATE('01/07/2024', 'DD/MM/YYYY')
 );
 
--- Odovzdanie 4
+-----------------------------
+-- Odovzdanie 4: Project04 --
+-----------------------------
+
+
+------- TRIGGER_1 -------
+
+CREATE OR REPLACE TRIGGER trg_update_room_on_checkout
+AFTER UPDATE OF reservationStatus ON Reservation -- Len pri zmene stlpca
+-- Pre kazdy aktualizovany riadok
+FOR EACH ROW
+WHEN (NEW.reservationStatus IN ('Completed', 'Checked-out'))
+DECLARE
+  -- Vezmeme datovy typ z typu stlpca
+  v_room_id Room.id_room%TYPE;
+BEGIN
+  -- Ziskame ID izby
+  v_room_id := :NEW.id_room;
+  UPDATE Room
+  SET roomStatus = 'Cleaning'
+  WHERE id_room = v_room_id;
+
+  EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Error in trigger trg_update_room_on_checkout for Reservation ID ' || :NEW.id_reser || ': ' || SQLERRM);
+END;
+/
+
+------- TRIGGER_2 -------
+
+CREATE OR REPLACE TRIGGER trg_insert_time_accessed_into_managed_by
+BEFORE INSERT ON Managed_by
+-- Pre kazdy aktualizovany riadok
+FOR EACH ROW
+BEGIN
+  -- Ziskame ID izby
+  :NEW.timeAccessed := SYSDATE;
+
+  EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Error in trigger trg_insert_time_accessed_into_managed_by for Managed_by, ID = ' || :NEW.id_managed || ': ' || SQLERRM);
+END;
+/
+
+Prompt /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+Prompt ======== Zobrazenie funkcie triggera 1 ========
+
+-- Zoberieme rezervaciu s ID=1, ktora je pre izbu s ID=1
+VARIABLE reservation_id_demo1 NUMBER;
+VARIABLE room_id_demo1 NUMBER;
+EXEC :reservation_id_demo1 := 1;
+
+BEGIN
+  SELECT id_room INTO :room_id_demo1 FROM Reservation WHERE id_reser = :reservation_id_demo1;
+  DBMS_OUTPUT.PUT_LINE('Testujem pre Rezervaciu ID: ' || :reservation_id_demo1 || ', Izba ID: ' || :room_id_demo1);
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Chyba: Rezervacia s ID ' || :reservation_id_demo1 || ' nebola najdena. Upravte ID pre demonstraciu.');
+END;
+/
+
+PROMPT Stav PRED aktualizaciou rezervacie a izby:
+SELECT id_reser, reservationStatus 
+FROM Reservation 
+WHERE id_reser = :reservation_id_demo1;
+
+SELECT id_room, roomStatus 
+FROM Room 
+WHERE id_room = :room_id_demo1;
+
+PROMPT Aktualizujem status rezervacie :reservation_id_demo1 na 'Completed'...
+UPDATE Reservation
+SET reservationStatus = 'Completed'
+WHERE id_reser = :reservation_id_demo1;
+
+PROMPT Stav PO aktualizacii (Trigger by mal zmenit roomStatus na 'Cleaning'):
+SELECT id_reser, reservationStatus 
+FROM Reservation 
+WHERE id_reser = :reservation_id_demo1;
+
+SELECT id_room, roomStatus 
+FROM Room 
+WHERE id_room = :room_id_demo1;
+
+Prompt ======== Koniec zobrazenia funkcie triggera 1 ========
+Prompt /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+Prompt ======== Zobrazenie funkcie triggera 2 ========
+
+Prompt Vypis aktualnych zaznamov v 
+SELECT *
+FROM Managed_by
+WHERE id_person=1;
+
+INSERT INTO Managed_by (id_person, id_room, managedByName, managedByDescription)
+VALUES (1, 1, 'New Record', 'Checked in guest');
+
+SELECT *
+FROM Managed_by
+WHERE id_person=1;
+
+Prompt ======== Koniec zobrazenia funkcie triggera 2 ========
+Prompt /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 --------------------------------------------
 ---------------- PROCEDURES ----------------
