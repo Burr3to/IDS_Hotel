@@ -1069,7 +1069,8 @@ EXEC showRoomsWithEmployeesHistory(p_firstName => 'Peter');
 --    pomocou operátora CASE a definovaných pravidiel (prahy pre počet rezervácií
 --    alebo útratu). Výsledky sú usporiadané podľa celkovej útraty a počtu rezervácií.
 
-WITH CustomerReservationData AS (
+WITH 
+    CustomerReservationData AS (
     SELECT
         P.id_person,
         P.firstName,
